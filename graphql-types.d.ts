@@ -3725,6 +3725,14 @@ export type AllImageFileQuery = { desktopImages: { edges: Array<{ node: (
         & { childImageSharp?: Maybe<{ fluid?: Maybe<GatsbyImageSharpFluid_WithWebp_NoBase64Fragment> }> }
       ) }> } };
 
+export type TopPageInfoQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TopPageInfoQuery = { settingYaml?: Maybe<(
+    Pick<SettingYaml, 'statement'>
+    & { companyInfo?: Maybe<Array<Maybe<Pick<SettingYamlCompanyInfo, 'title' | 'description'>>>> }
+  )> };
+
 export type SiteMetaDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3744,14 +3752,6 @@ export type PageInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type PageInfoQuery = { settingYaml?: Maybe<{ pages?: Maybe<Array<Maybe<Pick<SettingYamlPages, 'id' | 'title' | 'description'>>>> }> };
-
-export type TopPageInfoQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type TopPageInfoQuery = { settingYaml?: Maybe<(
-    Pick<SettingYaml, 'statement'>
-    & { companyInfo?: Maybe<Array<Maybe<Pick<SettingYamlCompanyInfo, 'title' | 'description'>>>> }
-  )> };
 
 export type GatsbyImageSharpFixedFragment = Pick<ImageSharpFixed, 'base64' | 'width' | 'height' | 'src' | 'srcSet'>;
 
