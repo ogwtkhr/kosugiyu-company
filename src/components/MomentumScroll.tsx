@@ -3,6 +3,9 @@ import { ValueOf } from '@/types';
 import styled, { createGlobalStyle, css } from 'styled-components';
 import { window } from '@/util/window';
 
+// 参考
+// https://qiita.com/nishinoshake/items/f6cbe1cc81d1c179cf0d
+
 const DirectionType = {
   VERTICAL: 'vertical',
   HORIZONTAL: 'horizontal',
@@ -14,20 +17,33 @@ const getScrollY = () => window.scrollY || window.pageYOffset;
 type DirectionType = ValueOf<typeof DirectionType>;
 
 type MomentumScrollProps = {
+  smooth?: boolean;
+  speed?: number;
+  fuzzy?: number;
   direction?: DirectionType;
 };
 
 export const MomentumScroll: React.FC<MomentumScrollProps> = ({
+  smooth,
+  speed = 0.1,
+  fuzzy = 0.5,
   direction = DirectionType.VERTICAL,
   children,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [baseScrollY, setBaseScrollY] = useState<number>(getScrollY());
+  const [destination, setDestination] = useState<number>(getScrollY());
   const [bodyHeight, setBodyHeight] = useState<number | undefined>(undefined);
+  const [before, setBefore] = useState<number>(0);
 
   const isVertical = () => direction === DirectionType.VERTICAL;
 
-  const next = baseScrollY || 0; // TODO,
+  let next: number;
+  if (smooth) {
+    next = Math.round(before + (destination - before) * speed);
+    if (Math.abs(destination - next) <= fuzzy) next = destination;
+  } else {
+    next = destination;
+  }
 
   // resize
   const setBodySize = () => {
@@ -56,7 +72,7 @@ export const MomentumScroll: React.FC<MomentumScrollProps> = ({
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
-      setBaseScrollY(getScrollY);
+      setDestination(getScrollY);
     });
 
     window.addEventListener('resize', () => {
@@ -69,6 +85,14 @@ export const MomentumScroll: React.FC<MomentumScrollProps> = ({
   useEffect(() => {
     if (bodyHeight) window.document.body.style.height = `${bodyHeight}px`;
   }, [bodyHeight]);
+
+  useEffect(() => {
+    if (destination !== next) {
+      window.requestAnimationFrame(() => {
+        setBefore(next);
+      });
+    }
+  }, [next, destination]);
 
   return (
     <>
@@ -87,6 +111,7 @@ type ContainerProps = {
 const Container = styled.div<ContainerProps>`
   position: fixed;
   top: 0;
+  will-change: transform;
   ${({ direction }) =>
     direction === DirectionType.HORIZONTAL
       ? css`
@@ -102,7 +127,6 @@ const GlobalStyle = createGlobalStyle`
     -ms-overflow-style: none;
     scrollbar-width: none;
     overscroll-behavior: none;
-    /* overflow: hidden; */
 
     &::-webkit-scrollbar {
       display:none;

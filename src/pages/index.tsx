@@ -34,7 +34,7 @@ const IndexPage: React.FC = () => {
       <BaseLayout>
         <Meta />
         <Container>
-          <MomentumScroll direction="horizontal">
+          <MomentumScroll direction="horizontal" smooth>
             <MainContent>
               <MainMessageContainer>
                 <MessageHeading>山路を登りながら</MessageHeading>
