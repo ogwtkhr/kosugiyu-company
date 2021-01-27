@@ -2205,12 +2205,12 @@ export type Query = {
   allSitePage: SitePageConnection;
   imageSharp?: Maybe<ImageSharp>;
   allImageSharp: ImageSharpConnection;
-  settingYaml?: Maybe<SettingYaml>;
-  allSettingYaml: SettingYamlConnection;
   microcmsArchive?: Maybe<MicrocmsArchive>;
   allMicrocmsArchive: MicrocmsArchiveConnection;
   microcmsPersons?: Maybe<MicrocmsPersons>;
   allMicrocmsPersons: MicrocmsPersonsConnection;
+  settingYaml?: Maybe<SettingYaml>;
+  allSettingYaml: SettingYamlConnection;
   siteBuildMetadata?: Maybe<SiteBuildMetadata>;
   allSiteBuildMetadata: SiteBuildMetadataConnection;
   sitePlugin?: Maybe<SitePlugin>;
@@ -2354,7 +2354,6 @@ export type QuerySitePageArgs = {
   children?: Maybe<NodeFilterListInput>;
   internal?: Maybe<InternalFilterInput>;
   isCreatedByStatefulCreatePages?: Maybe<BooleanQueryOperatorInput>;
-  context?: Maybe<SitePageContextFilterInput>;
   pluginCreator?: Maybe<SitePluginFilterInput>;
   pluginCreatorId?: Maybe<StringQueryOperatorInput>;
   componentPath?: Maybe<StringQueryOperatorInput>;
@@ -2387,26 +2386,6 @@ export type QueryImageSharpArgs = {
 export type QueryAllImageSharpArgs = {
   filter?: Maybe<ImageSharpFilterInput>;
   sort?: Maybe<ImageSharpSortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
-export type QuerySettingYamlArgs = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  meta?: Maybe<SettingYamlMetaFilterInput>;
-  pages?: Maybe<SettingYamlPagesFilterListInput>;
-  statement?: Maybe<StringQueryOperatorInput>;
-  facilities?: Maybe<SettingYamlFacilitiesFilterListInput>;
-};
-
-
-export type QueryAllSettingYamlArgs = {
-  filter?: Maybe<SettingYamlFilterInput>;
-  sort?: Maybe<SettingYamlSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -2463,6 +2442,26 @@ export type QueryMicrocmsPersonsArgs = {
 export type QueryAllMicrocmsPersonsArgs = {
   filter?: Maybe<MicrocmsPersonsFilterInput>;
   sort?: Maybe<MicrocmsPersonsSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
+export type QuerySettingYamlArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  meta?: Maybe<SettingYamlMetaFilterInput>;
+  pages?: Maybe<SettingYamlPagesFilterListInput>;
+  statement?: Maybe<StringQueryOperatorInput>;
+  facilities?: Maybe<SettingYamlFacilitiesFilterListInput>;
+};
+
+
+export type QueryAllSettingYamlArgs = {
+  filter?: Maybe<SettingYamlFilterInput>;
+  sort?: Maybe<SettingYamlSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -3084,7 +3083,6 @@ export type SitePage = Node & {
   children: Array<Node>;
   internal: Internal;
   isCreatedByStatefulCreatePages?: Maybe<Scalars['Boolean']>;
-  context?: Maybe<SitePageContext>;
   pluginCreator?: Maybe<SitePlugin>;
   pluginCreatorId?: Maybe<Scalars['String']>;
   componentPath?: Maybe<Scalars['String']>;
@@ -3109,14 +3107,6 @@ export type SitePageConnectionGroupArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   field: SitePageFieldsEnum;
-};
-
-export type SitePageContext = {
-  slug?: Maybe<Scalars['String']>;
-};
-
-export type SitePageContextFilterInput = {
-  slug?: Maybe<StringQueryOperatorInput>;
 };
 
 export type SitePageEdge = {
@@ -3218,7 +3208,6 @@ export type SitePageFieldsEnum =
   | 'internal___owner'
   | 'internal___type'
   | 'isCreatedByStatefulCreatePages'
-  | 'context___slug'
   | 'pluginCreator___id'
   | 'pluginCreator___parent___id'
   | 'pluginCreator___parent___parent___id'
@@ -3323,7 +3312,6 @@ export type SitePageFilterInput = {
   children?: Maybe<NodeFilterListInput>;
   internal?: Maybe<InternalFilterInput>;
   isCreatedByStatefulCreatePages?: Maybe<BooleanQueryOperatorInput>;
-  context?: Maybe<SitePageContextFilterInput>;
   pluginCreator?: Maybe<SitePluginFilterInput>;
   pluginCreatorId?: Maybe<StringQueryOperatorInput>;
   componentPath?: Maybe<StringQueryOperatorInput>;
@@ -3761,17 +3749,6 @@ export type WebPOptions = {
   quality?: Maybe<Scalars['Int']>;
 };
 
-export type AllImageFileQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AllImageFileQuery = { desktopImages: { edges: Array<{ node: (
-        Pick<File, 'relativePath'>
-        & { childImageSharp?: Maybe<{ fluid?: Maybe<GatsbyImageSharpFluid_WithWebp_NoBase64Fragment> }> }
-      ) }> }, mobileImages: { edges: Array<{ node: (
-        Pick<File, 'relativePath'>
-        & { childImageSharp?: Maybe<{ fluid?: Maybe<GatsbyImageSharpFluid_WithWebp_NoBase64Fragment> }> }
-      ) }> } };
-
 export type SiteMetaDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3796,26 +3773,6 @@ export type StatementQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type StatementQuery = { settingYaml?: Maybe<Pick<SettingYaml, 'statement'>> };
-
-export type Unnamed_1_QueryVariables = Exact<{
-  slug: Scalars['String'];
-}>;
-
-
-export type Unnamed_1_Query = { microcmsArchive?: Maybe<(
-    Pick<MicrocmsArchive, 'title' | 'body' | 'publishedAt'>
-    & { writer?: Maybe<Pick<MicrocmsArchiveWriter, 'name'>>, mainVisual?: Maybe<Pick<MicrocmsArchiveMainVisual, 'url'>>, info?: Maybe<Array<Maybe<Pick<MicrocmsArchiveInfo, 'fieldId' | 'head' | 'body'>>>> }
-  )> };
-
-export type Unnamed_2_QueryVariables = Exact<{
-  slug: Scalars['String'];
-}>;
-
-
-export type Unnamed_2_Query = { microcmsPersons?: Maybe<(
-    Pick<MicrocmsPersons, 'title' | 'position' | 'name' | 'body' | 'credit' | 'publishedAt'>
-    & { writer?: Maybe<Pick<MicrocmsPersonsWriter, 'name'>>, mainVisual?: Maybe<Pick<MicrocmsPersonsMainVisual, 'url'>> }
-  )> };
 
 export type GatsbyImageSharpFixedFragment = Pick<ImageSharpFixed, 'base64' | 'width' | 'height' | 'src' | 'srcSet'>;
 
