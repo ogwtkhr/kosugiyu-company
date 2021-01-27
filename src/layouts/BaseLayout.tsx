@@ -28,11 +28,11 @@ export const BaseLayout: React.FC<BaseLayoutProps> = ({
 
   return (
     <>
-      {useHeader && <Header siteTitle={title} />}
+      {/* {useHeader && <Header siteTitle={title} />} */}
       <GlobalStyle />
       <Main>{children}</Main>
       {useFooter && <Footer />}
-      <Menu isTriggerShow={showMenu} />
+      {/* <Menu isTriggerShow={showMenu} /> */}
       <Loading />
     </>
   );

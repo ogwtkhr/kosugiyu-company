@@ -81,7 +81,7 @@ export const Meta: React.FC<Props> = ({
       link={[
         {
           href:
-            'https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,500|Roboto+Condensed&display=swap',
+            'https://fonts.googleapis.com/css?family=Noto+Serif+JP:400,500|Roboto+Condensed&display=swap',
           rel: 'stylesheet',
           type: 'text/css',
         },

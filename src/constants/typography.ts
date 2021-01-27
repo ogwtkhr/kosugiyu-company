@@ -19,7 +19,7 @@ export const TextSize = {
 export type TextSize = ValueOf<typeof TextSize>;
 
 export const TypeFace = {
-  BASE: `'Noto Sans JP', sans-serif`,
+  BASE: `'Noto Serif JP', serif`,
   SANS_SERIF: 'Helvetica Neue, Helvetica, Arial, sans-serif',
 } as const;
 

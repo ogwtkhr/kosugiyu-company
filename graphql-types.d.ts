@@ -773,6 +773,7 @@ export type FileFieldsEnum =
   | 'childrenSettingYaml___pages___id'
   | 'childrenSettingYaml___pages___title'
   | 'childrenSettingYaml___pages___description'
+  | 'childrenSettingYaml___statement'
   | 'childrenSettingYaml___facilities'
   | 'childrenSettingYaml___facilities___id'
   | 'childrenSettingYaml___facilities___title'
@@ -829,6 +830,7 @@ export type FileFieldsEnum =
   | 'childSettingYaml___pages___id'
   | 'childSettingYaml___pages___title'
   | 'childSettingYaml___pages___description'
+  | 'childSettingYaml___statement'
   | 'childSettingYaml___facilities'
   | 'childSettingYaml___facilities___id'
   | 'childSettingYaml___facilities___title'
@@ -2203,12 +2205,12 @@ export type Query = {
   allSitePage: SitePageConnection;
   imageSharp?: Maybe<ImageSharp>;
   allImageSharp: ImageSharpConnection;
+  settingYaml?: Maybe<SettingYaml>;
+  allSettingYaml: SettingYamlConnection;
   microcmsArchive?: Maybe<MicrocmsArchive>;
   allMicrocmsArchive: MicrocmsArchiveConnection;
   microcmsPersons?: Maybe<MicrocmsPersons>;
   allMicrocmsPersons: MicrocmsPersonsConnection;
-  settingYaml?: Maybe<SettingYaml>;
-  allSettingYaml: SettingYamlConnection;
   siteBuildMetadata?: Maybe<SiteBuildMetadata>;
   allSiteBuildMetadata: SiteBuildMetadataConnection;
   sitePlugin?: Maybe<SitePlugin>;
@@ -2390,6 +2392,26 @@ export type QueryAllImageSharpArgs = {
 };
 
 
+export type QuerySettingYamlArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  meta?: Maybe<SettingYamlMetaFilterInput>;
+  pages?: Maybe<SettingYamlPagesFilterListInput>;
+  statement?: Maybe<StringQueryOperatorInput>;
+  facilities?: Maybe<SettingYamlFacilitiesFilterListInput>;
+};
+
+
+export type QueryAllSettingYamlArgs = {
+  filter?: Maybe<SettingYamlFilterInput>;
+  sort?: Maybe<SettingYamlSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
 export type QueryMicrocmsArchiveArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
@@ -2446,25 +2468,6 @@ export type QueryAllMicrocmsPersonsArgs = {
 };
 
 
-export type QuerySettingYamlArgs = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  meta?: Maybe<SettingYamlMetaFilterInput>;
-  pages?: Maybe<SettingYamlPagesFilterListInput>;
-  facilities?: Maybe<SettingYamlFacilitiesFilterListInput>;
-};
-
-
-export type QueryAllSettingYamlArgs = {
-  filter?: Maybe<SettingYamlFilterInput>;
-  sort?: Maybe<SettingYamlSortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
 export type QuerySiteBuildMetadataArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
@@ -2513,6 +2516,7 @@ export type SettingYaml = Node & {
   internal: Internal;
   meta?: Maybe<SettingYamlMeta>;
   pages?: Maybe<Array<Maybe<SettingYamlPages>>>;
+  statement?: Maybe<Array<Maybe<Scalars['String']>>>;
   facilities?: Maybe<Array<Maybe<SettingYamlFacilities>>>;
 };
 
@@ -2674,6 +2678,7 @@ export type SettingYamlFieldsEnum =
   | 'pages___id'
   | 'pages___title'
   | 'pages___description'
+  | 'statement'
   | 'facilities'
   | 'facilities___id'
   | 'facilities___title'
@@ -2690,6 +2695,7 @@ export type SettingYamlFilterInput = {
   internal?: Maybe<InternalFilterInput>;
   meta?: Maybe<SettingYamlMetaFilterInput>;
   pages?: Maybe<SettingYamlPagesFilterListInput>;
+  statement?: Maybe<StringQueryOperatorInput>;
   facilities?: Maybe<SettingYamlFacilitiesFilterListInput>;
 };
 
@@ -3786,21 +3792,10 @@ export type PageInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type PageInfoQuery = { settingYaml?: Maybe<{ pages?: Maybe<Array<Maybe<Pick<SettingYamlPages, 'id' | 'title' | 'description'>>>> }> };
 
-export type AllMicrocmsArchiveQueryVariables = Exact<{ [key: string]: never; }>;
+export type StatementQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllMicrocmsArchiveQuery = { allMicrocmsArchive: { nodes: Array<(
-      Pick<MicrocmsArchive, 'id' | 'title' | 'slug' | 'publishedAt'>
-      & { mainVisual?: Maybe<Pick<MicrocmsArchiveMainVisual, 'url'>> }
-    )> } };
-
-export type AllMicrocmsPersonsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AllMicrocmsPersonsQuery = { allMicrocmsPersons: { nodes: Array<(
-      Pick<MicrocmsPersons, 'id' | 'position' | 'title' | 'name' | 'slug'>
-      & { mainVisual?: Maybe<Pick<MicrocmsPersonsMainVisual, 'url'>> }
-    )> } };
+export type StatementQuery = { settingYaml?: Maybe<Pick<SettingYaml, 'statement'>> };
 
 export type Unnamed_1_QueryVariables = Exact<{
   slug: Scalars['String'];
