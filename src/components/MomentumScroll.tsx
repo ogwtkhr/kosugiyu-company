@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ValueOf } from '@/types';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle, css } from 'styled-components';
 import { window } from '@/util/window';
 
 const DirectionType = {
@@ -57,7 +57,10 @@ export const MomentumScroll: React.FC<MomentumScrollProps> = ({
     window.addEventListener('scroll', () => {
       setBaseScrollY(getScrollY);
     });
-    setBodySize();
+
+    window.addEventListener('resize', () => {
+      setBodySize();
+    });
   }, []);
 
   useEffect(() => {
@@ -67,18 +70,28 @@ export const MomentumScroll: React.FC<MomentumScrollProps> = ({
   return (
     <>
       <GlobalStyle />
-      <Container ref={ref} style={nextStyle}>
+      <Container ref={ref} style={nextStyle} direction={direction}>
         {children}
       </Container>
     </>
   );
 };
 
-const Container = styled.div`
+type ContainerProps = {
+  direction: DirectionType;
+};
+
+const Container = styled.div<ContainerProps>`
   position: fixed;
   top: 0;
-  left: 0;
-  width: 100%;
+  ${({ direction }) =>
+    direction === DirectionType.HORIZONTAL
+      ? css`
+          right: 0;
+        `
+      : css`
+          left: 0;
+        `};
 `;
 
 const GlobalStyle = createGlobalStyle`

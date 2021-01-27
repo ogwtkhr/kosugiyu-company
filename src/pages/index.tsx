@@ -5,7 +5,7 @@ import { StatementQuery } from '@/types';
 
 import styled from 'styled-components';
 import { Spacing } from '@/constants';
-import { MomentumScroll } from '@/components';
+import { MomentumScroll, Picture } from '@/components';
 
 const IndexPage: React.FC = () => {
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
@@ -26,14 +26,19 @@ const IndexPage: React.FC = () => {
         <Meta />
         <Container>
           <MomentumScroll direction="horizontal">
-            <MainMessageContainer>
-              <MessageHeading>山路を登りながら</MessageHeading>
-              <MainMessage>
-                {mainArticle.map((paragraph, index) => (
-                  <MainMessageParagraph key={index}>{paragraph}</MainMessageParagraph>
-                ))}
-              </MainMessage>
-            </MainMessageContainer>
+            <MainContent>
+              <MainMessageContainer>
+                <MessageHeading>山路を登りながら</MessageHeading>
+                <MainMessage>
+                  {mainArticle.map((paragraph, index) => (
+                    <MainMessageParagraph key={index}>{paragraph}</MainMessageParagraph>
+                  ))}
+                </MainMessage>
+              </MainMessageContainer>
+              <HeroImage>
+                <Picture relativePath="photos/top/hero.jpg" />
+              </HeroImage>
+            </MainContent>
           </MomentumScroll>
         </Container>
       </BaseLayout>
@@ -43,9 +48,9 @@ const IndexPage: React.FC = () => {
 
 const Container = styled.div``;
 
-const ScrollContent = styled.div`
-  position: fixed;
-  right: 0;
+const MainContent = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
 `;
 
 const MainMessageContainer = styled.div`
@@ -59,10 +64,10 @@ const MessageHeading = styled.h1`
   margin-top: 10vh;
   margin-left: 6vh;
   font-size: 2.4vh;
+  font-weight: bold;
   letter-spacing: 0.2em;
   text-orientation: upright;
   writing-mode: vertical-rl;
-  font-weight: bold;
 `;
 
 const MainMessage = styled.article`
@@ -78,6 +83,12 @@ const MainMessageParagraph = styled.p`
   & + & {
     margin-right: 4vh;
   }
+`;
+
+const HeroImage = styled.div`
+  width: 360px;
+  height: 100vh;
+  margin-right: 12vh;
 `;
 
 export default IndexPage;
