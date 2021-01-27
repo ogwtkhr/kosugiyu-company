@@ -31,13 +31,14 @@ export const MomentumScroll: React.FC<MomentumScrollProps> = ({
 
   // resize
   const setBodySize = () => {
-    const rawContentLength = isVertical() ? ref.current?.clientHeight : ref.current?.clientWidth;
-    if (rawContentLength !== bodyHeight) {
-      setBodyHeight(rawContentLength);
+    const vertical = isVertical();
+    const rawContentLength = vertical ? ref.current?.clientHeight : ref.current?.clientWidth;
+    if (rawContentLength && rawContentLength !== bodyHeight) {
+      setBodyHeight(
+        vertical ? rawContentLength : rawContentLength - window.innerWidth + window.innerHeight,
+      );
     }
   };
-
-  setBodySize();
 
   const nextStyle = {
     transform: (() => {
@@ -61,6 +62,8 @@ export const MomentumScroll: React.FC<MomentumScrollProps> = ({
     window.addEventListener('resize', () => {
       setBodySize();
     });
+
+    setBodySize();
   }, []);
 
   useEffect(() => {

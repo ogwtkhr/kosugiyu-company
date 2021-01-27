@@ -1,24 +1,33 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BaseLayout, Meta } from '@/layouts';
 import { graphql, useStaticQuery } from 'gatsby';
-import { StatementQuery } from '@/types';
+import { TopPageInfoQuery } from '@/types';
 
 import styled from 'styled-components';
-import { Spacing } from '@/constants';
+import { Colors, Spacing, TextSize, TypeFace } from '@/constants';
 import { MomentumScroll, Picture } from '@/components';
 
 const IndexPage: React.FC = () => {
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
 
-  const data = useStaticQuery<StatementQuery>(graphql`
-    query Statement {
+  const data = useStaticQuery<TopPageInfoQuery>(graphql`
+    query TopPageInfo {
       settingYaml {
         statement
+        companyInfo {
+          title
+          description
+        }
       }
     }
   `);
 
-  const mainArticle = data.settingYaml?.statement?.map((paragraph) => paragraph || '') || [];
+  const mainArticle = data.settingYaml?.statement?.map((paragraph = '') => paragraph) || [];
+  const companyInfo =
+    data.settingYaml?.companyInfo?.map((info) => ({
+      title: info?.title || '',
+      description: info?.description || '',
+    })) || [];
 
   return (
     <>
@@ -38,6 +47,18 @@ const IndexPage: React.FC = () => {
               <HeroImage>
                 <Picture relativePath="photos/top/hero.jpg" />
               </HeroImage>
+              <CompanyInfo>
+                <CompanyInfoList>
+                  {companyInfo.map(({ title, description }) => (
+                    <CompanyInfoListItem key={title}>
+                      <CompanyInfoItem>
+                        <CompanyInfoTitle>{title}</CompanyInfoTitle>
+                        <CompanyInfoDescription>{description}</CompanyInfoDescription>
+                      </CompanyInfoItem>
+                    </CompanyInfoListItem>
+                  ))}
+                </CompanyInfoList>
+              </CompanyInfo>
             </MainContent>
           </MomentumScroll>
         </Container>
@@ -53,11 +74,13 @@ const MainContent = styled.div`
   flex-direction: row-reverse;
 `;
 
+const NORMAL_GUTTER = 14;
+
 const MainMessageContainer = styled.div`
   /* width: 300px; */
   display: flex;
   flex-direction: row-reverse;
-  margin-right: 14vh;
+  margin-right: ${NORMAL_GUTTER}vh;
 `;
 
 const MessageHeading = styled.h1`
@@ -72,7 +95,7 @@ const MessageHeading = styled.h1`
 
 const MainMessage = styled.article`
   height: ${(420 / 800) * 100}vh;
-  margin-top: 15vh;
+  margin-top: ${NORMAL_GUTTER}vh;
   text-orientation: upright;
   writing-mode: vertical-rl;
 `;
@@ -88,7 +111,37 @@ const MainMessageParagraph = styled.p`
 const HeroImage = styled.div`
   width: 360px;
   height: 100vh;
-  margin-right: 12vh;
+  margin-right: ${NORMAL_GUTTER}vh;
 `;
+
+const CompanyInfo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding-right: ${NORMAL_GUTTER}vh;
+  padding-left: ${NORMAL_GUTTER}vh;
+`;
+
+const CompanyInfoList = styled.ul`
+  min-width: 240px;
+`;
+
+const CompanyInfoListItem = styled.li``;
+
+const CompanyInfoItem = styled.dl`
+  display: flex;
+  align-items: center;
+  color: ${Colors.UI_TEXT_WEAKEN};
+  font-family: ${TypeFace.SANS_SERIF};
+  font-size: ${TextSize.X_SMALL}rem;
+`;
+
+const CompanyInfoTitle = styled.dt`
+  min-width: 100px;
+  font-weight: bold;
+`;
+
+const CompanyInfoDescription = styled.dd``;
 
 export default IndexPage;

@@ -774,14 +774,9 @@ export type FileFieldsEnum =
   | 'childrenSettingYaml___pages___title'
   | 'childrenSettingYaml___pages___description'
   | 'childrenSettingYaml___statement'
-  | 'childrenSettingYaml___facilities'
-  | 'childrenSettingYaml___facilities___id'
-  | 'childrenSettingYaml___facilities___title'
-  | 'childrenSettingYaml___facilities___description'
-  | 'childrenSettingYaml___facilities___details'
-  | 'childrenSettingYaml___facilities___details___id'
-  | 'childrenSettingYaml___facilities___details___title'
-  | 'childrenSettingYaml___facilities___details___description'
+  | 'childrenSettingYaml___companyInfo'
+  | 'childrenSettingYaml___companyInfo___title'
+  | 'childrenSettingYaml___companyInfo___description'
   | 'childSettingYaml___id'
   | 'childSettingYaml___parent___id'
   | 'childSettingYaml___parent___parent___id'
@@ -831,14 +826,9 @@ export type FileFieldsEnum =
   | 'childSettingYaml___pages___title'
   | 'childSettingYaml___pages___description'
   | 'childSettingYaml___statement'
-  | 'childSettingYaml___facilities'
-  | 'childSettingYaml___facilities___id'
-  | 'childSettingYaml___facilities___title'
-  | 'childSettingYaml___facilities___description'
-  | 'childSettingYaml___facilities___details'
-  | 'childSettingYaml___facilities___details___id'
-  | 'childSettingYaml___facilities___details___title'
-  | 'childSettingYaml___facilities___details___description'
+  | 'childSettingYaml___companyInfo'
+  | 'childSettingYaml___companyInfo___title'
+  | 'childSettingYaml___companyInfo___description'
   | 'id'
   | 'parent___id'
   | 'parent___parent___id'
@@ -2205,12 +2195,12 @@ export type Query = {
   allSitePage: SitePageConnection;
   imageSharp?: Maybe<ImageSharp>;
   allImageSharp: ImageSharpConnection;
+  settingYaml?: Maybe<SettingYaml>;
+  allSettingYaml: SettingYamlConnection;
   microcmsArchive?: Maybe<MicrocmsArchive>;
   allMicrocmsArchive: MicrocmsArchiveConnection;
   microcmsPersons?: Maybe<MicrocmsPersons>;
   allMicrocmsPersons: MicrocmsPersonsConnection;
-  settingYaml?: Maybe<SettingYaml>;
-  allSettingYaml: SettingYamlConnection;
   siteBuildMetadata?: Maybe<SiteBuildMetadata>;
   allSiteBuildMetadata: SiteBuildMetadataConnection;
   sitePlugin?: Maybe<SitePlugin>;
@@ -2349,14 +2339,14 @@ export type QuerySitePageArgs = {
   internalComponentName?: Maybe<StringQueryOperatorInput>;
   componentChunkName?: Maybe<StringQueryOperatorInput>;
   matchPath?: Maybe<StringQueryOperatorInput>;
-  isCreatedByStatefulCreatePages?: Maybe<BooleanQueryOperatorInput>;
-  pluginCreator?: Maybe<SitePluginFilterInput>;
-  pluginCreatorId?: Maybe<StringQueryOperatorInput>;
-  componentPath?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
   internal?: Maybe<InternalFilterInput>;
+  isCreatedByStatefulCreatePages?: Maybe<BooleanQueryOperatorInput>;
+  pluginCreator?: Maybe<SitePluginFilterInput>;
+  pluginCreatorId?: Maybe<StringQueryOperatorInput>;
+  componentPath?: Maybe<StringQueryOperatorInput>;
 };
 
 
@@ -2386,6 +2376,26 @@ export type QueryImageSharpArgs = {
 export type QueryAllImageSharpArgs = {
   filter?: Maybe<ImageSharpFilterInput>;
   sort?: Maybe<ImageSharpSortInput>;
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+};
+
+
+export type QuerySettingYamlArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  meta?: Maybe<SettingYamlMetaFilterInput>;
+  pages?: Maybe<SettingYamlPagesFilterListInput>;
+  statement?: Maybe<StringQueryOperatorInput>;
+  companyInfo?: Maybe<SettingYamlCompanyInfoFilterListInput>;
+};
+
+
+export type QueryAllSettingYamlArgs = {
+  filter?: Maybe<SettingYamlFilterInput>;
+  sort?: Maybe<SettingYamlSortInput>;
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
 };
@@ -2447,26 +2457,6 @@ export type QueryAllMicrocmsPersonsArgs = {
 };
 
 
-export type QuerySettingYamlArgs = {
-  id?: Maybe<StringQueryOperatorInput>;
-  parent?: Maybe<NodeFilterInput>;
-  children?: Maybe<NodeFilterListInput>;
-  internal?: Maybe<InternalFilterInput>;
-  meta?: Maybe<SettingYamlMetaFilterInput>;
-  pages?: Maybe<SettingYamlPagesFilterListInput>;
-  statement?: Maybe<StringQueryOperatorInput>;
-  facilities?: Maybe<SettingYamlFacilitiesFilterListInput>;
-};
-
-
-export type QueryAllSettingYamlArgs = {
-  filter?: Maybe<SettingYamlFilterInput>;
-  sort?: Maybe<SettingYamlSortInput>;
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-};
-
-
 export type QuerySiteBuildMetadataArgs = {
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
@@ -2516,7 +2506,21 @@ export type SettingYaml = Node & {
   meta?: Maybe<SettingYamlMeta>;
   pages?: Maybe<Array<Maybe<SettingYamlPages>>>;
   statement?: Maybe<Array<Maybe<Scalars['String']>>>;
-  facilities?: Maybe<Array<Maybe<SettingYamlFacilities>>>;
+  companyInfo?: Maybe<Array<Maybe<SettingYamlCompanyInfo>>>;
+};
+
+export type SettingYamlCompanyInfo = {
+  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+};
+
+export type SettingYamlCompanyInfoFilterInput = {
+  title?: Maybe<StringQueryOperatorInput>;
+  description?: Maybe<StringQueryOperatorInput>;
+};
+
+export type SettingYamlCompanyInfoFilterListInput = {
+  elemMatch?: Maybe<SettingYamlCompanyInfoFilterInput>;
 };
 
 export type SettingYamlConnection = {
@@ -2544,40 +2548,6 @@ export type SettingYamlEdge = {
   next?: Maybe<SettingYaml>;
   node: SettingYaml;
   previous?: Maybe<SettingYaml>;
-};
-
-export type SettingYamlFacilities = {
-  id?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  details?: Maybe<Array<Maybe<SettingYamlFacilitiesDetails>>>;
-};
-
-export type SettingYamlFacilitiesDetails = {
-  id?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-};
-
-export type SettingYamlFacilitiesDetailsFilterInput = {
-  id?: Maybe<StringQueryOperatorInput>;
-  title?: Maybe<StringQueryOperatorInput>;
-  description?: Maybe<StringQueryOperatorInput>;
-};
-
-export type SettingYamlFacilitiesDetailsFilterListInput = {
-  elemMatch?: Maybe<SettingYamlFacilitiesDetailsFilterInput>;
-};
-
-export type SettingYamlFacilitiesFilterInput = {
-  id?: Maybe<StringQueryOperatorInput>;
-  title?: Maybe<StringQueryOperatorInput>;
-  description?: Maybe<StringQueryOperatorInput>;
-  details?: Maybe<SettingYamlFacilitiesDetailsFilterListInput>;
-};
-
-export type SettingYamlFacilitiesFilterListInput = {
-  elemMatch?: Maybe<SettingYamlFacilitiesFilterInput>;
 };
 
 export type SettingYamlFieldsEnum = 
@@ -2678,14 +2648,9 @@ export type SettingYamlFieldsEnum =
   | 'pages___title'
   | 'pages___description'
   | 'statement'
-  | 'facilities'
-  | 'facilities___id'
-  | 'facilities___title'
-  | 'facilities___description'
-  | 'facilities___details'
-  | 'facilities___details___id'
-  | 'facilities___details___title'
-  | 'facilities___details___description';
+  | 'companyInfo'
+  | 'companyInfo___title'
+  | 'companyInfo___description';
 
 export type SettingYamlFilterInput = {
   id?: Maybe<StringQueryOperatorInput>;
@@ -2695,7 +2660,7 @@ export type SettingYamlFilterInput = {
   meta?: Maybe<SettingYamlMetaFilterInput>;
   pages?: Maybe<SettingYamlPagesFilterListInput>;
   statement?: Maybe<StringQueryOperatorInput>;
-  facilities?: Maybe<SettingYamlFacilitiesFilterListInput>;
+  companyInfo?: Maybe<SettingYamlCompanyInfoFilterListInput>;
 };
 
 export type SettingYamlFilterListInput = {
@@ -3078,14 +3043,14 @@ export type SitePage = Node & {
   internalComponentName: Scalars['String'];
   componentChunkName: Scalars['String'];
   matchPath?: Maybe<Scalars['String']>;
-  isCreatedByStatefulCreatePages?: Maybe<Scalars['Boolean']>;
-  pluginCreator?: Maybe<SitePlugin>;
-  pluginCreatorId?: Maybe<Scalars['String']>;
-  componentPath?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   parent?: Maybe<Node>;
   children: Array<Node>;
   internal: Internal;
+  isCreatedByStatefulCreatePages?: Maybe<Scalars['Boolean']>;
+  pluginCreator?: Maybe<SitePlugin>;
+  pluginCreatorId?: Maybe<Scalars['String']>;
+  componentPath?: Maybe<Scalars['String']>;
 };
 
 export type SitePageConnection = {
@@ -3121,6 +3086,92 @@ export type SitePageFieldsEnum =
   | 'internalComponentName'
   | 'componentChunkName'
   | 'matchPath'
+  | 'id'
+  | 'parent___id'
+  | 'parent___parent___id'
+  | 'parent___parent___parent___id'
+  | 'parent___parent___parent___children'
+  | 'parent___parent___children'
+  | 'parent___parent___children___id'
+  | 'parent___parent___children___children'
+  | 'parent___parent___internal___content'
+  | 'parent___parent___internal___contentDigest'
+  | 'parent___parent___internal___description'
+  | 'parent___parent___internal___fieldOwners'
+  | 'parent___parent___internal___ignoreType'
+  | 'parent___parent___internal___mediaType'
+  | 'parent___parent___internal___owner'
+  | 'parent___parent___internal___type'
+  | 'parent___children'
+  | 'parent___children___id'
+  | 'parent___children___parent___id'
+  | 'parent___children___parent___children'
+  | 'parent___children___children'
+  | 'parent___children___children___id'
+  | 'parent___children___children___children'
+  | 'parent___children___internal___content'
+  | 'parent___children___internal___contentDigest'
+  | 'parent___children___internal___description'
+  | 'parent___children___internal___fieldOwners'
+  | 'parent___children___internal___ignoreType'
+  | 'parent___children___internal___mediaType'
+  | 'parent___children___internal___owner'
+  | 'parent___children___internal___type'
+  | 'parent___internal___content'
+  | 'parent___internal___contentDigest'
+  | 'parent___internal___description'
+  | 'parent___internal___fieldOwners'
+  | 'parent___internal___ignoreType'
+  | 'parent___internal___mediaType'
+  | 'parent___internal___owner'
+  | 'parent___internal___type'
+  | 'children'
+  | 'children___id'
+  | 'children___parent___id'
+  | 'children___parent___parent___id'
+  | 'children___parent___parent___children'
+  | 'children___parent___children'
+  | 'children___parent___children___id'
+  | 'children___parent___children___children'
+  | 'children___parent___internal___content'
+  | 'children___parent___internal___contentDigest'
+  | 'children___parent___internal___description'
+  | 'children___parent___internal___fieldOwners'
+  | 'children___parent___internal___ignoreType'
+  | 'children___parent___internal___mediaType'
+  | 'children___parent___internal___owner'
+  | 'children___parent___internal___type'
+  | 'children___children'
+  | 'children___children___id'
+  | 'children___children___parent___id'
+  | 'children___children___parent___children'
+  | 'children___children___children'
+  | 'children___children___children___id'
+  | 'children___children___children___children'
+  | 'children___children___internal___content'
+  | 'children___children___internal___contentDigest'
+  | 'children___children___internal___description'
+  | 'children___children___internal___fieldOwners'
+  | 'children___children___internal___ignoreType'
+  | 'children___children___internal___mediaType'
+  | 'children___children___internal___owner'
+  | 'children___children___internal___type'
+  | 'children___internal___content'
+  | 'children___internal___contentDigest'
+  | 'children___internal___description'
+  | 'children___internal___fieldOwners'
+  | 'children___internal___ignoreType'
+  | 'children___internal___mediaType'
+  | 'children___internal___owner'
+  | 'children___internal___type'
+  | 'internal___content'
+  | 'internal___contentDigest'
+  | 'internal___description'
+  | 'internal___fieldOwners'
+  | 'internal___ignoreType'
+  | 'internal___mediaType'
+  | 'internal___owner'
+  | 'internal___type'
   | 'isCreatedByStatefulCreatePages'
   | 'pluginCreator___id'
   | 'pluginCreator___parent___id'
@@ -3213,93 +3264,7 @@ export type SitePageFieldsEnum =
   | 'pluginCreator___packageJson___peerDependencies___version'
   | 'pluginCreator___packageJson___keywords'
   | 'pluginCreatorId'
-  | 'componentPath'
-  | 'id'
-  | 'parent___id'
-  | 'parent___parent___id'
-  | 'parent___parent___parent___id'
-  | 'parent___parent___parent___children'
-  | 'parent___parent___children'
-  | 'parent___parent___children___id'
-  | 'parent___parent___children___children'
-  | 'parent___parent___internal___content'
-  | 'parent___parent___internal___contentDigest'
-  | 'parent___parent___internal___description'
-  | 'parent___parent___internal___fieldOwners'
-  | 'parent___parent___internal___ignoreType'
-  | 'parent___parent___internal___mediaType'
-  | 'parent___parent___internal___owner'
-  | 'parent___parent___internal___type'
-  | 'parent___children'
-  | 'parent___children___id'
-  | 'parent___children___parent___id'
-  | 'parent___children___parent___children'
-  | 'parent___children___children'
-  | 'parent___children___children___id'
-  | 'parent___children___children___children'
-  | 'parent___children___internal___content'
-  | 'parent___children___internal___contentDigest'
-  | 'parent___children___internal___description'
-  | 'parent___children___internal___fieldOwners'
-  | 'parent___children___internal___ignoreType'
-  | 'parent___children___internal___mediaType'
-  | 'parent___children___internal___owner'
-  | 'parent___children___internal___type'
-  | 'parent___internal___content'
-  | 'parent___internal___contentDigest'
-  | 'parent___internal___description'
-  | 'parent___internal___fieldOwners'
-  | 'parent___internal___ignoreType'
-  | 'parent___internal___mediaType'
-  | 'parent___internal___owner'
-  | 'parent___internal___type'
-  | 'children'
-  | 'children___id'
-  | 'children___parent___id'
-  | 'children___parent___parent___id'
-  | 'children___parent___parent___children'
-  | 'children___parent___children'
-  | 'children___parent___children___id'
-  | 'children___parent___children___children'
-  | 'children___parent___internal___content'
-  | 'children___parent___internal___contentDigest'
-  | 'children___parent___internal___description'
-  | 'children___parent___internal___fieldOwners'
-  | 'children___parent___internal___ignoreType'
-  | 'children___parent___internal___mediaType'
-  | 'children___parent___internal___owner'
-  | 'children___parent___internal___type'
-  | 'children___children'
-  | 'children___children___id'
-  | 'children___children___parent___id'
-  | 'children___children___parent___children'
-  | 'children___children___children'
-  | 'children___children___children___id'
-  | 'children___children___children___children'
-  | 'children___children___internal___content'
-  | 'children___children___internal___contentDigest'
-  | 'children___children___internal___description'
-  | 'children___children___internal___fieldOwners'
-  | 'children___children___internal___ignoreType'
-  | 'children___children___internal___mediaType'
-  | 'children___children___internal___owner'
-  | 'children___children___internal___type'
-  | 'children___internal___content'
-  | 'children___internal___contentDigest'
-  | 'children___internal___description'
-  | 'children___internal___fieldOwners'
-  | 'children___internal___ignoreType'
-  | 'children___internal___mediaType'
-  | 'children___internal___owner'
-  | 'children___internal___type'
-  | 'internal___content'
-  | 'internal___contentDigest'
-  | 'internal___description'
-  | 'internal___fieldOwners'
-  | 'internal___ignoreType'
-  | 'internal___mediaType'
-  | 'internal___owner'
-  | 'internal___type';
+  | 'componentPath';
 
 export type SitePageFilterInput = {
   path?: Maybe<StringQueryOperatorInput>;
@@ -3307,14 +3272,14 @@ export type SitePageFilterInput = {
   internalComponentName?: Maybe<StringQueryOperatorInput>;
   componentChunkName?: Maybe<StringQueryOperatorInput>;
   matchPath?: Maybe<StringQueryOperatorInput>;
-  isCreatedByStatefulCreatePages?: Maybe<BooleanQueryOperatorInput>;
-  pluginCreator?: Maybe<SitePluginFilterInput>;
-  pluginCreatorId?: Maybe<StringQueryOperatorInput>;
-  componentPath?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
   internal?: Maybe<InternalFilterInput>;
+  isCreatedByStatefulCreatePages?: Maybe<BooleanQueryOperatorInput>;
+  pluginCreator?: Maybe<SitePluginFilterInput>;
+  pluginCreatorId?: Maybe<StringQueryOperatorInput>;
+  componentPath?: Maybe<StringQueryOperatorInput>;
 };
 
 export type SitePageGroupConnection = {
@@ -3780,10 +3745,13 @@ export type PageInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type PageInfoQuery = { settingYaml?: Maybe<{ pages?: Maybe<Array<Maybe<Pick<SettingYamlPages, 'id' | 'title' | 'description'>>>> }> };
 
-export type StatementQueryVariables = Exact<{ [key: string]: never; }>;
+export type TopPageInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type StatementQuery = { settingYaml?: Maybe<Pick<SettingYaml, 'statement'>> };
+export type TopPageInfoQuery = { settingYaml?: Maybe<(
+    Pick<SettingYaml, 'statement'>
+    & { companyInfo?: Maybe<Array<Maybe<Pick<SettingYamlCompanyInfo, 'title' | 'description'>>>> }
+  )> };
 
 export type GatsbyImageSharpFixedFragment = Pick<ImageSharpFixed, 'base64' | 'width' | 'height' | 'src' | 'srcSet'>;
 
