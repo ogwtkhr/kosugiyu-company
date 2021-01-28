@@ -20,7 +20,10 @@ export const TopContent: React.FC = () => {
   const data = useStaticQuery<TopPageInfoQuery>(graphql`
     query TopPageInfo {
       settingYaml {
-        statement
+        statement {
+          title
+          body
+        }
         companyInfo {
           title
           description
@@ -29,7 +32,8 @@ export const TopContent: React.FC = () => {
     }
   `);
 
-  const mainArticle = data.settingYaml?.statement?.map((paragraph = '') => paragraph) || [];
+  const mainTitle = data.settingYaml?.statement?.title || '';
+  const mainArticle = data.settingYaml?.statement?.body?.map((paragraph = '') => paragraph) || [];
   const companyInfo =
     data.settingYaml?.companyInfo?.map((info) => ({
       title: info?.title || '',
@@ -38,7 +42,7 @@ export const TopContent: React.FC = () => {
   return (
     <MainContent>
       <MainMessageContainer>
-        <MessageHeading>山路を登りながら</MessageHeading>
+        <MessageHeading>{mainTitle}</MessageHeading>
         <MainMessage>
           {mainArticle.map((paragraph, index) => (
             <MainMessageParagraph key={index}>
