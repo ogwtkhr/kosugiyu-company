@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { window } from '@/util/window';
 import { DomEventType, ScreenValue } from '@/constants';
 
 export const useScreenThreshold = (
