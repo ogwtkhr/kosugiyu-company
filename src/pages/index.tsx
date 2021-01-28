@@ -1,38 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BaseLayout, Meta } from '@/layouts';
+import { useScreenThreshold } from '@/hooks';
 
 import styled from 'styled-components';
-import { ScreenValue } from '@/constants';
 import { MomentumScroll, TopContent } from '@/components';
 
-const threshold = ScreenValue.MEDIUM;
-
 const IndexPage: React.FC = () => {
-  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
-  const isNormalScreen = windowWidth > threshold;
-
-  useEffect(() => {
-    const adjustWindowWidth = () => {
-      setWindowWidth(window.innerWidth);
-    };
-    window.addEventListener('resize', adjustWindowWidth);
-    adjustWindowWidth();
-  }, []);
-
+  const { overThreshold: isNormalScreen } = useScreenThreshold();
   return (
-    <>
-      <BaseLayout>
-        <Meta />
-        <Container>
-          {isNormalScreen && (
-            <MomentumScroll direction="horizontal" smooth>
-              <TopContent screen="normal" />
-            </MomentumScroll>
-          )}
-          {!isNormalScreen && <TopContent screen="small" />}
-        </Container>
-      </BaseLayout>
-    </>
+    <BaseLayout useHeader={!isNormalScreen}>
+      <Meta />
+      <Container>
+        {isNormalScreen && (
+          <MomentumScroll direction="horizontal" smooth>
+            <TopContent />
+          </MomentumScroll>
+        )}
+        {!isNormalScreen && <TopContent />}
+      </Container>
+    </BaseLayout>
   );
 };
 

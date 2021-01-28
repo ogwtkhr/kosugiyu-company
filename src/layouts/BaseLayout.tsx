@@ -1,16 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
-
-import { Footer } from './Footer';
+import styled, { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from './GlobalStyle';
 import 'intersection-observer';
 import 'reset.css';
-
-import { Menu } from '@/components';
-import { Colors } from '@/constants';
-import Header from './Header';
-import Loading from './Loading';
-import { useBaseMetaInfo } from '@/hooks';
+import { Colors, ScreenValue } from '@/constants';
+import { Header } from '@/layouts/Header';
+import { Footer } from '@/layouts/Footer';
+import { Loading } from '@/layouts/Loading';
+import { useScreenThreshold, useBaseMetaInfo } from '@/hooks';
 
 type BaseLayoutProps = {
   useHeader?: boolean;
@@ -21,20 +18,23 @@ type BaseLayoutProps = {
 export const BaseLayout: React.FC<BaseLayoutProps> = ({
   useHeader = true,
   useFooter = true,
-  showMenu = true,
   children,
 }) => {
   const { title } = useBaseMetaInfo();
+  const { overThreshold: isNormalScreen } = useScreenThreshold(ScreenValue.MEDIUM);
 
   return (
-    <>
-      {/* {useHeader && <Header siteTitle={title} />} */}
+    <ThemeProvider
+      theme={{
+        isNormalScreen,
+      }}
+    >
       <GlobalStyle />
+      {useHeader && <Header siteTitle={title} />}
       <Main>{children}</Main>
       {useFooter && <Footer />}
-      {/* <Menu isTriggerShow={showMenu} /> */}
       <Loading />
-    </>
+    </ThemeProvider>
   );
 };
 

@@ -20,7 +20,7 @@ export type TextSize = ValueOf<typeof TextSize>;
 
 export const TypeFace = {
   BASE: `'Noto Serif JP', serif`,
-  SANS_SERIF: 'Helvetica Neue, Helvetica, Arial, sans-serif',
+  SANS_SERIF: `'Helvetica Neue',Arial,'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo,sans-serif`,
 } as const;
 
 export const TextWeight = {
@@ -45,7 +45,7 @@ export const LetterSpacing = {
   WIDE: 0.25,
 } as const;
 
-const Mixin = {
+export const TypographyMixin = {
   BASE: css`
     color: ${Colors.UI_TEXT_MAIN};
     font-family: ${TypeFace.BASE};
@@ -88,7 +88,7 @@ export const Typography = {
   TypeFace,
   TypeStyle,
   LineHeight,
-  Mixin,
+  Mixin: TypographyMixin,
 } as const;
 
 export default Typography;

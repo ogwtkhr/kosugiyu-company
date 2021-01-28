@@ -1,46 +1,71 @@
 import React from 'react';
-import styled from 'styled-components';
-import { Spacing, BigSpacing, TextSize, ScreenType, TypeFace } from '@/constants';
+import styled, { css } from 'styled-components';
+import { Spacing, TextSize, TypeFace } from '@/constants';
 import { CombinationLogo } from '@/components';
-import media from 'styled-media-query';
+import { useTheme } from '@/hooks';
 import { Link } from 'gatsby';
 
-export const Footer: React.FC = () => (
-  <Container>
-    <Inner>
-      <FooterText>{new Date().getFullYear()} Kosugiyu, inc.</FooterText>
-      <Link to="/">
-        <FooterLogo>
-          <CombinationLogo />
-        </FooterLogo>
-      </Link>
-    </Inner>
-  </Container>
-);
+export const Footer: React.FC = () => {
+  const { isNormalScreen } = useTheme();
+  return (
+    <Container>
+      <Inner>
+        <FooterText>© {new Date().getFullYear()} Kosugiyu, inc.</FooterText>
+        {isNormalScreen && (
+          <StyledLink to="/">
+            <CombinationLogo />
+          </StyledLink>
+        )}
+      </Inner>
+    </Container>
+  );
+};
 
 const Container = styled.footer`
-  position: fixed;
-  right: 5vh;
-  bottom: 5vh;
+  ${({ theme }) =>
+    theme.isNormalScreen
+      ? css`
+          position: fixed;
+          right: 5vh;
+          bottom: 5vh;
+        `
+      : css`
+          padding: ${Spacing.LARGE}px 0;
+        `};
 `;
 
 const Inner = styled.div`
-  display: flex;
-  align-items: flex-end;
+  ${({ theme }) =>
+    theme.isNormalScreen
+      ? css`
+          display: flex;
+          align-items: flex-end;
+        `
+      : css``};
 `;
 
-const FooterLogo = styled.div`
-  width: 80px;
-
-  ${media.lessThan(ScreenType.MEDIUM)`
-    width: ${BigSpacing.SMALL}px;
-  `}
+const StyledLink = styled(Link)`
+  ${({ theme }) =>
+    theme.isNormalScreen
+      ? css`
+          display: block;
+          width: 80px;
+        `
+      : css``};
 `;
 
 const FooterText = styled.p`
-  margin-right: ${Spacing.XXX_LARGE}px;
-  font-family: ${TypeFace.SANS_SERIF};
-  font-size: ${TextSize.XX_SMALL}rem;
+  ${({ theme }) =>
+    theme.isNormalScreen
+      ? css`
+          margin-right: ${Spacing.XXX_LARGE}px;
+          font-family: ${TypeFace.SANS_SERIF};
+          font-size: ${TextSize.XX_SMALL}rem;
+        `
+      : css`
+          text-align: center;
+          padding: ${Spacing.LARGE}px 0;
+        `};
 `;
 
 export default Footer;

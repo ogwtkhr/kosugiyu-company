@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ValueOf } from '@/types';
 import styled, { createGlobalStyle, css } from 'styled-components';
 import { window } from '@/util/window';
-import { initial } from 'lodash';
+import { DomEventType } from '@/constants';
 
 // 参考
 // https://qiita.com/nishinoshake/items/f6cbe1cc81d1c179cf0d
@@ -72,17 +72,20 @@ export const MomentumScroll: React.FC<MomentumScrollProps> = ({
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', () => {
+    const scrollHandler = () => {
       setDestination(getScrollY);
-    });
-
-    window.addEventListener('resize', () => {
+    };
+    const resizeHandler = () => {
       setBodySize();
-    });
+    };
+    window.addEventListener(DomEventType.SCROLL, scrollHandler);
+    window.addEventListener(DomEventType.RESIZE, resizeHandler);
 
     setBodySize();
     return () => {
       window.document.body.style.height = 'initial';
+      window.removeEventListener(DomEventType.SCROLL, scrollHandler);
+      window.removeEventListener(DomEventType.RESIZE, resizeHandler);
     };
   }, []);
 
