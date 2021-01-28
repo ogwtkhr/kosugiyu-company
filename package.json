@@ -5,6 +5,7 @@
   "version": "0.0.1",
   "author": "ogw",
   "dependencies": {
+    "browser-sync": "^2.26.14",
     "dayjs": "^1.10.4",
     "dotenv": "^8.2.0",
     "gatsby": "^2.31.1",
@@ -13,6 +14,7 @@
     "gatsby-source-microcms": "^1.0.1",
     "gatsby-transformer-sharp": "^2.11.0",
     "gatsby-transformer-yaml": "^2.10.0",
+    "global": "^4.4.0",
     "google-maps": "^4.3.3",
     "intersection-observer": "^0.12.0",
     "lodash": "^4.17.20",
