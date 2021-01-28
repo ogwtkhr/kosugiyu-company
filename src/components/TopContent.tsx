@@ -1,9 +1,17 @@
 import React from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
-import { TopPageInfoQuery } from '@/types';
+import { TopPageInfoQuery, ValueOf } from '@/types';
 import styled from 'styled-components';
 import { Colors, TextSize, TypeFace } from '@/constants';
 import { Picture } from '@/components';
+
+const ScreenType = {
+  VERTICAL: 'vertical',
+  HORIZONTAL: 'horizontal',
+  HORIZONTAL_REVERSE: 'horizontal-reverse',
+} as const;
+
+type ScreenType = ValueOf<typeof ScreenType>;
 
 export const TopContent: React.FC = () => {
   const data = useStaticQuery<TopPageInfoQuery>(graphql`

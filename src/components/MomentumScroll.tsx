@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ValueOf } from '@/types';
 import styled, { createGlobalStyle, css } from 'styled-components';
 import { window } from '@/util/window';
+import { initial } from 'lodash';
 
 // 参考
 // https://qiita.com/nishinoshake/items/f6cbe1cc81d1c179cf0d
@@ -80,6 +81,9 @@ export const MomentumScroll: React.FC<MomentumScrollProps> = ({
     });
 
     setBodySize();
+    return () => {
+      window.document.body.style.height = 'initial';
+    };
   }, []);
 
   useEffect(() => {

@@ -26,9 +26,10 @@ const IndexPage: React.FC = () => {
         <Container>
           {isNormalScreen && (
             <MomentumScroll direction="horizontal" smooth>
-              <TopContent />
+              <TopContent screen="normal" />
             </MomentumScroll>
           )}
+          {!isNormalScreen && <TopContent screen="small" />}
         </Container>
       </BaseLayout>
     </>

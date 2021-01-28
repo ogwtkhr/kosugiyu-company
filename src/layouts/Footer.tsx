@@ -20,14 +20,13 @@ export const Footer: React.FC = () => (
 
 const Container = styled.footer`
   position: fixed;
-  right: ${Spacing.XXX_LARGE}px;
-  bottom: ${Spacing.XXX_LARGE}px;
+  right: 5vh;
+  bottom: 5vh;
 `;
 
 const Inner = styled.div`
   display: flex;
   align-items: flex-end;
-  padding: ${Spacing.XXX_LARGE}px;
 `;
 
 const FooterLogo = styled.div`

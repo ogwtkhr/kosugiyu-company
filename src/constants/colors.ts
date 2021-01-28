@@ -6,7 +6,7 @@ const ABSTRACT_GRAY = '#999999';
 const ABSTRACT_WHITE = '#ffffff';
 const ABSTRACT_NAVY = '#114086';
 const ABSTRACT_PALE_GRAY = rgba(ABSTRACT_BLACK, 0.56);
-const ABSTRACT_DARK_WHITE = 'f7f7f7';
+const ABSTRACT_DARK_WHITE = '#f7f7f7';
 
 export const Colors = {
   UI_BASE: ABSTRACT_BLACK,
