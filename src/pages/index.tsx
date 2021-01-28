@@ -1,28 +1,29 @@
 import React from 'react';
 import { BaseLayout, Meta } from '@/layouts';
-import { useScreenThreshold, useHasMounted } from '@/hooks';
+import { useScreenThreshold } from '@/hooks';
 
 import styled from 'styled-components';
-import { MomentumScroll, TopContent } from '@/components';
+import { MomentumScroll, RenderClientOnly, TopContent } from '@/components';
 
 const IndexPage: React.FC = () => {
   const { overThreshold: isNormalScreen } = useScreenThreshold();
-  const hasMounted = useHasMounted();
 
   // SSRだとレンダリングが変になるのでスキップ
-  return hasMounted ? (
-    <BaseLayout useHeader={!isNormalScreen}>
-      <Meta />
-      <Container>
-        {isNormalScreen && (
-          <MomentumScroll direction="horizontal" smooth>
-            <TopContent />
-          </MomentumScroll>
-        )}
-        {!isNormalScreen && <TopContent />}
-      </Container>
-    </BaseLayout>
-  ) : null;
+  return (
+    <RenderClientOnly>
+      <BaseLayout useHeader={!isNormalScreen}>
+        <Meta />
+        <Container>
+          {isNormalScreen && (
+            <MomentumScroll direction="horizontal" smooth>
+              <TopContent />
+            </MomentumScroll>
+          )}
+          {!isNormalScreen && <TopContent />}
+        </Container>
+      </BaseLayout>
+    </RenderClientOnly>
+  );
 };
 
 const Container = styled.div``;

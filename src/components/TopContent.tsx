@@ -122,7 +122,6 @@ const MainMessage = styled.article`
 `;
 
 const MainMessageParagraph = styled.p`
-  /* セレクタによっては、リサイズ時に反映されない？ */
   & + & {
     margin-right: 4vh;
   }
